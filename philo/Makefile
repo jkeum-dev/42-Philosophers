@@ -18,6 +18,7 @@ INC_DIR = ./includes
 
 SRCS =	./srcs/main.c			\
 		./srcs/ft_atoi_pos.c	\
+		./srcs/thread.c			\
 		./srcs/utils.c
 
 OBJS = $(addprefix $(OBJS_DIR)/, $(notdir $(SRCS:.c=.o)))
