@@ -75,5 +75,7 @@ int	main(int argc, char *argv[])
 		return (1);
 	if (init_philo(&info))
 		return (1);
-	dining_philo(&info);
+	if (dining_philo(&info))
+		return (1);
+	return (0);
 }
