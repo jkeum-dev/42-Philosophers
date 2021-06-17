@@ -10,7 +10,7 @@ int	init_fork(t_info *info)
 	i = -1;
 	while (++i < info->num_philo)
 	{
-		if (pthread_mutex_init(&info->fork[i], NULL))
+		if (pthread_mutex_init(&(info->fork[i]), NULL))
 			return (str_err("Failed to initialize mutex.\n"));
 	}
 }
@@ -39,7 +39,7 @@ int	init_info(t_info *info, char **argv, int argc)
 	info->base_time = 0;
 	if (init_fork(info))
 		return (1);	
-	if (pthread_mutex_init(&info->status, NULL))
+	if (pthread_mutex_init(&(info->status), NULL))
 		return (str_err("Failed to initialize mutex.\n"));
 	return (0);
 }
