@@ -16,4 +16,6 @@ int	get_time(void);
 
 int	ft_atoi_pos(char *arg);
 
+int	dining_philo(t_info *info);
+
 # endif
