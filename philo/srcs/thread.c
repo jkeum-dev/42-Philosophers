@@ -1,16 +1,28 @@
 #include "philo.h"
 
-int	philo(t_philo *philo)
+void	*philo(t_philo *philo)
 {
-	
+	while (!philo->info->stop)
+	{
+		eating(philo);
+		if (philo->info->stop)
+			break ;
+		sleeping(philo);
+		if (philo->info->stop)
+			break ;
+		thinking(philo);
+		if (philo->info->stop)
+			break ;
+	}
+	return (NULL);
 }
 
-int	monitor(t_philo *philo)
+void	*monitor(t_philo *philo)
 {
 
 }
 
-int	dining_philo(t_info *info)
+int		dining_philo(t_info *info)
 {
 	int	i;
 
@@ -23,6 +35,7 @@ int	dining_philo(t_info *info)
 			return (str_err("Failed to create thread.\n"));
 		if (pthread_create(&(info->philo[i].monitor), NULL, monitor, &(info->philo[i])))
 			return (str_err("Failed to create thread.\n"));
+		usleep(1000);
 	}
 	i = -1;
 	while (++i < info->num_philo)
