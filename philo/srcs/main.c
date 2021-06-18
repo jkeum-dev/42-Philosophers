@@ -14,6 +14,7 @@ int	init_fork(t_info *info)
 		if (pthread_mutex_init(&(info->fork[i]), NULL))
 			return (str_err("Failed to initialize mutex.\n"));
 	}
+	return (0);
 }
 
 int	init_info(t_info *info, char **argv, int argc)
