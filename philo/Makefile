@@ -18,6 +18,8 @@ INC_DIR = ./includes
 
 SRCS =	./srcs/main.c			\
 		./srcs/ft_atoi_pos.c	\
+		./srcs/philo.c			\
+		./srcs/print.c			\
 		./srcs/thread.c			\
 		./srcs/utils.c
 
