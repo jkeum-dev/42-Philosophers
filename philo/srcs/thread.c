@@ -19,7 +19,6 @@ void	*philo(t_philo *philo)
 
 void	*monitor(t_philo *philo)
 {
-
 }
 
 int		dining_philo(t_info *info)
@@ -31,9 +30,11 @@ int		dining_philo(t_info *info)
 	while (++i < info->num_philo)
 	{
 		info->philo[i].start_time = get_time();
-		if (pthread_create(&(info->philo[i].philo_th), NULL, philo, &(info->philo[i])))
+		if (pthread_create(&(info->philo[i].philo_th), NULL,
+		philo, &(info->philo[i])))
 			return (str_err("Failed to create thread.\n"));
-		if (pthread_create(&(info->philo[i].monitor), NULL, monitor, &(info->philo[i])))
+		if (pthread_create(&(info->philo[i].monitor), NULL,
+		monitor, &(info->philo[i])))
 			return (str_err("Failed to create thread.\n"));
 		usleep(1000);
 	}
