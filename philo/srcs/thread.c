@@ -21,7 +21,8 @@ void	*philo(void *param)
 	philo = param;
 	while (!philo->info->stop)
 	{
-		eating(philo);
+		if (eating(philo))
+			continue ;
 		if (philo->info->num_must_eat != -1 && check_meals(philo))
 			break ;
 		if (philo->info->stop)
