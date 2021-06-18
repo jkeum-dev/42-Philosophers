@@ -1,10 +1,29 @@
 #include "philo.h"
 
-void	*philo(t_philo *philo)
+int		check_meals(t_philo *philo)
 {
+	int	i;
+
+	i = -1;
+	while (++i < philo->info->num_philo)
+	{
+		if (philo->info->philo[i].meals != philo->info->num_must_eat)
+			return (0);
+	}
+	philo->info->stop = 1;
+	return (1);
+}
+
+void	*philo(void *param)
+{
+	t_philo	*philo;
+
+	philo = param;
 	while (!philo->info->stop)
 	{
 		eating(philo);
+		if (philo->info->num_must_eat != -1 && check_meals(philo))
+			break ;
 		if (philo->info->stop)
 			break ;
 		sleeping(philo);
@@ -17,8 +36,22 @@ void	*philo(t_philo *philo)
 	return (NULL);
 }
 
-void	*monitor(t_philo *philo)
+void	*monitor(void *param)
 {
+	t_philo	*philo;
+
+	philo = param;
+	while (!philo->info->stop)
+	{
+		if (get_time() - philo->start_time >= philo->info->time_die)
+		{
+			print_status(philo, DIED);
+			philo->info->stop = 1;
+			break ;
+		}
+		usleep(100);
+	}
+	return (NULL);
 }
 
 int		dining_philo(t_info *info)
@@ -30,13 +63,12 @@ int		dining_philo(t_info *info)
 	while (++i < info->num_philo)
 	{
 		info->philo[i].start_time = get_time();
-		if (pthread_create(&(info->philo[i].philo_th), NULL,
-		philo, &(info->philo[i])))
+		if (pthread_create(&info->philo[i].philo_th, NULL, \
+		philo, &info->philo[i]))
 			return (str_err("Failed to create thread.\n"));
-		if (pthread_create(&(info->philo[i].monitor), NULL,
-		monitor, &(info->philo[i])))
+		if (pthread_create(&info->philo[i].monitor, NULL, \
+		monitor, &info->philo[i]))
 			return (str_err("Failed to create thread.\n"));
-		usleep(1000);
 	}
 	i = -1;
 	while (++i < info->num_philo)
