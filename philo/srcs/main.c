@@ -17,7 +17,7 @@ int	init_fork(t_info *info)
 	return (0);
 }
 
-int	init_info(t_info *info, char **argv, int argc)
+int	init_info_arg(t_info *info, char **argv, int argc)
 {
 	info->num_philo = ft_atoi_pos(argv[1]);
 	if (info->num_philo <= 0)
@@ -37,8 +37,24 @@ int	init_info(t_info *info, char **argv, int argc)
 	}
 	else
 		info->num_must_eat = -1;
+	return (0);
+}
+
+int	init_info(t_info *info, char **argv, int argc)
+{
+	int	i;
+
+	if (init_info_arg(info, argv, argc))
+		return (1);
 	info->stop = 0;
 	info->base_time = 0;
+	info->starv = (int *)malloc(sizeof(int) * info->num_philo);
+	if (!info->starv)
+		return (str_err("Failed to allocate memory.\n"));
+	i = -1;
+	while (++i < info->num_philo)
+		info->starv[i] = 0;
+	// memset(info->starv, 0, sizeof(info->starv) * info->num_philo);
 	if (init_fork(info))
 		return (1);
 	if (pthread_mutex_init(&(info->status), NULL))
