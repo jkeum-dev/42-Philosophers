@@ -2,6 +2,8 @@
 
 void	print_status(t_philo *philo, int status)
 {
+	if (philo->info->stop)
+		return ;
 	pthread_mutex_lock(&(philo->info->status));
 	printf("%d\t\t", get_time() - philo->info->base_time);
 	printf("Philo %d ", philo->n + 1);
