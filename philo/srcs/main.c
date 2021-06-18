@@ -4,7 +4,8 @@ int	init_fork(t_info *info)
 {
 	int	i;
 
-	info->fork = (pthread_mutex_t *)malloc(sizeof(pthread_mutex_t) * info->num_philo);
+	info->fork = (pthread_mutex_t *)malloc(sizeof(pthread_mutex_t)
+	* info->num_philo);
 	if (!info->fork)
 		return (str_err("Failed to allocate memory.\n"));
 	i = -1;
@@ -38,7 +39,7 @@ int	init_info(t_info *info, char **argv, int argc)
 	info->stop = 0;
 	info->base_time = 0;
 	if (init_fork(info))
-		return (1);	
+		return (1);
 	if (pthread_mutex_init(&(info->status), NULL))
 		return (str_err("Failed to initialize mutex.\n"));
 	return (0);
