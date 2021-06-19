@@ -19,10 +19,13 @@ void	*philo(void *param)
 	t_philo	*philo;
 
 	philo = param;
+	if (philo->n % 2 == 0)
+		usleep(1000 * philo->info->time_eat);
 	while (!philo->info->stop)
 	{
-		if (eating(philo))
-			continue ;
+		// if (eating(philo))
+		// 	continue ;
+		eating(philo);
 		if (philo->info->num_must_eat != -1 && check_meals(philo))
 			break ;
 		if (philo->info->stop)

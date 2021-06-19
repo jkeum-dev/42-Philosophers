@@ -23,7 +23,7 @@ int		get_time(void);
 int		ft_atoi_pos(char *arg);
 
 int		dining_philo(t_info *info);
-int		eating(t_philo *philo);
+void	eating(t_philo *philo);
 void	sleeping(t_philo *philo);
 void	thinking(t_philo *philo);
 
