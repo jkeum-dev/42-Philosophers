@@ -3,11 +3,13 @@
 int		check_meals(t_philo *philo)
 {
 	int	i;
+	int	cnt;
 
 	i = -1;
+	cnt = 0;
 	while (++i < philo->info->num_philo)
 	{
-		if (philo->info->philo[i].meals != philo->info->num_must_eat)
+		if (philo->info->philo[i].meals < philo->info->num_must_eat)
 			return (0);
 	}
 	philo->info->stop = 1;
@@ -23,8 +25,6 @@ void	*philo(void *param)
 		usleep(1000 * philo->info->time_eat);
 	while (!philo->info->stop)
 	{
-		// if (eating(philo))
-		// 	continue ;
 		eating(philo);
 		if (philo->info->num_must_eat != -1 && check_meals(philo))
 			break ;
@@ -47,12 +47,15 @@ void	*monitor(void *param)
 	philo = param;
 	while (!philo->info->stop)
 	{
+		pthread_mutex_lock(&philo->protect);
 		if (get_time() - philo->start_time >= philo->info->time_die)
 		{
 			print_status(philo, DIED);
 			philo->info->stop = 1;
+			pthread_mutex_unlock(&philo->protect);
 			break ;
 		}
+		pthread_mutex_unlock(&philo->protect);
 		usleep(100);
 	}
 	return (NULL);
