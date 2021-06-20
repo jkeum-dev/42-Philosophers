@@ -2,10 +2,13 @@
 
 void	print_status(t_philo *philo, int status)
 {
+	pthread_mutex_lock(&philo->info->status);
 	if (philo->info->stop)
+	{
+		pthread_mutex_unlock(&philo->info->status);
 		return ;
-	pthread_mutex_lock(&(philo->info->status));
-	printf("%d\t\t", get_time() - philo->info->base_time);
+	}
+	printf("%d\t", get_time() - philo->info->base_time);
 	printf("Philo %d ", philo->n + 1);
 	if (status == FORK)
 		printf("has taken a fork\n");
@@ -17,5 +20,5 @@ void	print_status(t_philo *philo, int status)
 		printf("is thinking\n");
 	else if (status == DIED)
 		printf("died\n");
-	pthread_mutex_unlock(&(philo->info->status));
+	pthread_mutex_unlock(&philo->info->status);
 }
