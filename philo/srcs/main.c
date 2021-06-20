@@ -1,6 +1,6 @@
 #include "philo.h"
 
-int	init_fork(t_info *info)
+int		init_fork(t_info *info)
 {
 	int	i;
 
@@ -17,7 +17,7 @@ int	init_fork(t_info *info)
 	return (0);
 }
 
-int	init_info(t_info *info, char **argv, int argc)
+int		init_info(t_info *info, char **argv, int argc)
 {
 	info->num_philo = ft_atoi_pos(argv[1]);
 	if (info->num_philo <= 0)
@@ -46,7 +46,7 @@ int	init_info(t_info *info, char **argv, int argc)
 	return (0);
 }
 
-int	init_philo(t_info *info)
+int		init_philo(t_info *info)
 {
 	int	i;
 
@@ -68,7 +68,22 @@ int	init_philo(t_info *info)
 	return (0);
 }
 
-int	main(int argc, char *argv[])
+void	free_all(t_info *info)
+{
+	int	i;
+
+	i = -1;
+	while (++i < info->num_philo)
+	{
+		pthread_mutex_destroy(&info->fork[i]);
+		pthread_mutex_destroy(&info->philo[i].protect);
+	}
+	pthread_mutex_destroy(&info->status);
+	free(info->philo);
+	free(info->fork);
+}
+
+int		main(int argc, char *argv[])
 {
 	t_info	info;
 
@@ -80,6 +95,10 @@ int	main(int argc, char *argv[])
 	if (init_philo(&info))
 		return (1);
 	if (dining_philo(&info))
+	{
+		free_all(&info);
 		return (1);
+	}
+	free_all(&info);
 	return (0);
 }
