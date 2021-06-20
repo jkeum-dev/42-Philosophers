@@ -23,14 +23,15 @@ struct	s_info
 
 struct	s_philo
 {
-	int			n;
-	int			fork_l;
-	int			fork_r;
-	int			start_time;
-	int			meals;
-	pthread_t	philo_th;
-	pthread_t	monitor;
-	t_info		*info;
+	int				n;
+	int				fork_l;
+	int				fork_r;
+	int				start_time;
+	int				meals;
+	pthread_t		philo_th;
+	pthread_t		monitor;
+	pthread_mutex_t	protect;
+	t_info			*info;
 };
 
 #endif
