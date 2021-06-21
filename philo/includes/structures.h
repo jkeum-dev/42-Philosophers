@@ -15,7 +15,6 @@ struct	s_info
 	int				num_must_eat;
 	int				stop;
 	int				base_time;
-	int				*starv;
 	pthread_mutex_t	*fork;
 	pthread_mutex_t	status;
 	t_philo			*philo;
