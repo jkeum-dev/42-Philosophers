@@ -53,5 +53,11 @@ int	main(int argc, char *argv[])
 		return (1);
 	if (init_philo(&info))
 		return (1);
+	/*
+	**	make philo processes (1 ~ num_philo)
+	**	each process eating/sleeping/thinking
+	**	check someone died
+	**	check everyone full (num_must_eat)
+	*/
 	return (0);
 }
