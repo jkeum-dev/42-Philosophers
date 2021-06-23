@@ -13,7 +13,12 @@ struct s_info
 	int		time_eat;
 	int		time_sleep;
 	int		num_must_eat;
+	int		stop;
 	int		base_time;
+	sem_t	*fork;
+	sem_t	*print;
+	sem_t	*full;
+	sem_t	*died;
 	t_philo	*philo;
 };
 
@@ -23,6 +28,7 @@ struct s_philo
 	int		start_time;
 	int		meals;
 	pid_t	philo_p;
+	sem_t	*eating;
 	t_info	*info;
 };
 
