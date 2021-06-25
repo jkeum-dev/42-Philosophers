@@ -2,6 +2,7 @@
 # define STRUCTURES_H
 
 # include <unistd.h>	// fork, usleep
+# include <pthread.h>	// pthread_()
 
 typedef struct s_info	t_info;
 typedef struct s_philo	t_philo;
@@ -16,7 +17,7 @@ struct s_info
 	int		stop;
 	int		base_time;
 	sem_t	*fork;
-	sem_t	*print;
+	sem_t	*status;
 	sem_t	*full;
 	sem_t	*died;
 	t_philo	*philo;
@@ -24,12 +25,13 @@ struct s_info
 
 struct s_philo
 {
-	int		n;
-	int		start_time;
-	int		meals;
-	pid_t	philo_p;
-	sem_t	*eating;
-	t_info	*info;
+	int			n;
+	int			start_time;
+	int			meals;
+	pid_t		philo_p;
+	sem_t		*protect;
+	pthread_t	monitor;
+	t_info		*info;
 };
 
 #endif
