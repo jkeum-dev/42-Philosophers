@@ -7,16 +7,24 @@
 # include <signal.h>	// kill
 # include <sys/time.h>	// gettimeofday
 # include <sys/wait.h>	// waitpid
-# include <pthread.h>	// pthread_()
 # include <semaphore.h>	// sem_()
 # include "structures.h"
 
 # define MAX_INT 2147483647
+
+# define FORK 1
+# define EATING 2
+# define SLEEPING 3
+# define THINKING 4
+# define DIED 5
 
 int		str_err(char *str);
 int		ft_strlen(char *str);
 int		get_time(void);
 
 int		ft_atoi_pos(char *arg);
+char	*ft_itoa(int n);
+
+int		dining_philo(t_info *info);
 
 #endif
