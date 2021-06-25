@@ -20,13 +20,19 @@ int	init_info(t_info *info, char **argv, int argc)
 	}
 	else
 		info->num_must_eat = -1;
+	info->stop = 0;
 	info->base_time = 0;
+	info->fork = sem_open("/fork", O_CREAT | O_EXCL, 0644, info->num_philo);
+	info->status = sem_open("/status", O_CREAT | O_EXCL, 0644, 1);
+	info->full = sem_open("/full", O_CREAT | O_EXCL, 0644, 0);
+	info->died = sem_open("/died", O_CREAT | O_EXCL, 0644, 0);
 	return (0);
 }
 
 int	init_philo(t_info *info)
 {
-	int	i;
+	int		i;
+	char	*name;
 
 	info->philo = (t_philo *)malloc(sizeof(t_philo) * info->num_philo);
 	if (!info->philo)
@@ -38,6 +44,9 @@ int	init_philo(t_info *info)
 		info->philo[i].start_time = 0;
 		info->philo[i].meals = 0;
 		info->philo[i].info = info;
+		name = ft_strjoin_free("/protect", ft_itoa(i + 1));
+		info->philo[i].protect = sem_open(name, O_CREAT | O_EXCL, 0644, 0);
+		free(name);
 	}
 	return (0);
 }
@@ -59,5 +68,10 @@ int	main(int argc, char *argv[])
 	**	check someone died
 	**	check everyone full (num_must_eat)
 	*/
+	if (dining_philo(&info))
+	{
+		// free_all
+		return (1);
+	}
 	return (0);
 }
