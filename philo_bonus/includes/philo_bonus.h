@@ -26,5 +26,10 @@ int		ft_atoi_pos(char *arg);
 char	*ft_itoa(int n);
 
 int		dining_philo(t_info *info);
+void	eating(t_philo *philo);
+void	sleeping(t_philo *philo);
+void	thinking(t_philo *philo);
+
+void	print_status(t_philo *philo, int status);
 
 #endif
