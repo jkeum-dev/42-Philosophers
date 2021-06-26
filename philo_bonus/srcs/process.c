@@ -30,8 +30,12 @@ int		process(t_philo *philo)
 	while (!philo->info->stop)
 	{
 		eating(philo);
-		if (philo->info->num_must_eat != -1 && check_meals(philo))
+		if (philo->info->num_must_eat != -1 && \
+		philo->meals == philo->info->num_must_eat)
+		{
+			sem_post(philo->info->full);
 			break ;
+		}
 		if (philo->info->stop)
 			break ;
 		sleeping(philo);
