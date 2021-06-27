@@ -20,6 +20,7 @@
 
 int		str_err(char *str);
 int		ft_strlen(char *str);
+char	*ft_strjoin_free(char *s1, char *s2);
 int		get_time(void);
 
 int		ft_atoi_pos(char *arg);

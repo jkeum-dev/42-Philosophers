@@ -9,18 +9,20 @@ typedef struct s_philo	t_philo;
 
 struct s_info
 {
-	int		num_philo;
-	int		time_die;
-	int		time_eat;
-	int		time_sleep;
-	int		num_must_eat;
-	int		stop;
-	int		base_time;
-	sem_t	*fork;
-	sem_t	*status;
-	sem_t	*full;
-	sem_t	*died;
-	t_philo	*philo;
+	int			num_philo;
+	int			time_die;
+	int			time_eat;
+	int			time_sleep;
+	int			num_must_eat;
+	int			stop;
+	int			base_time;
+	sem_t		*fork;
+	sem_t		*status;
+	sem_t		*full;
+	sem_t		*died;
+	pthread_t	full_t;
+	pthread_t	died_t;
+	t_philo		*philo;
 };
 
 struct s_philo

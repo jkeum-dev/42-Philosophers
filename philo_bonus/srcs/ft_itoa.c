@@ -53,6 +53,24 @@ static char	*get_arr(char *res, int n, int len, int sign)
 	return (res);
 }
 
+static char	*ft_strdup(char *s1)
+{
+	char	*res;
+	int		i;
+
+	res = malloc(ft_strlen(s1) + 1);
+	if (!res)
+		return (NULL);
+	i = 0;
+	while (s1[i])
+	{
+		res[i] = s1[i];
+		i++;
+	}
+	res[i] = '\0';
+	return (res);
+}
+
 char		*ft_itoa(int n)
 {
 	int		len;

@@ -1,12 +1,12 @@
 #include "philo_bonus.h"
 
-int	str_err(char *str)
+int		str_err(char *str)
 {
 	write(2, str, ft_strlen(str));
 	return (1);
 }
 
-int	ft_strlen(char *str)
+int		ft_strlen(char *str)
 {
 	int	len;
 
@@ -18,7 +18,21 @@ int	ft_strlen(char *str)
 	return (len);
 }
 
-char	*ft_strjoin_free(char const *s1, char const *s2)
+void	*ft_memcpy(void *dest, void *src, int n)
+{
+	char	*temp;
+	char	*s;
+
+	if (dest == NULL && src == NULL)
+		return (NULL);
+	temp = dest;
+	s = src;
+	while (n--)
+		*temp++ = *s++;
+	return (dest);
+}
+
+char	*ft_strjoin_free(char *s1, char *s2)
 {
 	int		s1_len;
 	int		s2_len;
@@ -38,7 +52,7 @@ char	*ft_strjoin_free(char const *s1, char const *s2)
 	return (res);
 }
 
-int	get_time(void)
+int		get_time(void)
 {
 	struct timeval	time;
 

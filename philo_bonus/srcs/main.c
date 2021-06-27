@@ -1,4 +1,5 @@
 #include "philo_bonus.h"
+#include <fcntl.h>
 
 int	init_info(t_info *info, char **argv, int argc)
 {

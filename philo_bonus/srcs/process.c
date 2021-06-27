@@ -60,21 +60,39 @@ void	*check_meals(void *param)
 	while (1)
 	{
 		sem_wait(info->full);
-
 		cnt++;
 		if (cnt == info->num_philo)
 			break ;
 	}
+	info->stop = 1;
+	return (NULL);
+}
+
+void	*check_died(void *param)
+{
+	int		i;
+	t_info	*info;
+
+	info = param;
+	sem_wait(info->died);
+	i = -1;
+	while (++i < info->num_philo)
+		kill(info->philo[i].philo_p, SIGTERM);
 	return (NULL);
 }
 
 int		dining_philo(t_info *info)
 {
-	int			i;
-	pthread_t	full;
+	int	i;
 
-	if (pthread_create(&full, NULL, check_meals, info))
+	if (pthread_create(&info->full_t, NULL, check_meals, info))
 		return (str_err("Failed to create thread.\n"));
+	if (pthread_detach(info->full_t))
+		return (str_err("Failed to detach thread.\n"));
+	if (pthread_create(&info->died_t, NULL, check_died, info))
+		return (str_err("Failed to create thread.\n"));
+	if (pthread_detach(info->died_t))
+		return (str_err("Failed to detach thread.\n"));
 	info->base_time = get_time();
 	i = -1;
 	while (++i < info->num_philo)
@@ -89,6 +107,11 @@ int		dining_philo(t_info *info)
 		else if (info->philo[i].philo_p < 0)
 			return (str_err("Failed to fork process.\n"));
 	}
-
+	i = -1;
+	if (info->stop)
+	{
+		while (++i < info->num_philo)
+			kill(info->philo[i].philo_p, SIGTERM);
+	}
 	return (0);
 }
