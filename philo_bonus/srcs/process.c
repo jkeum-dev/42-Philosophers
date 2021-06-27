@@ -25,17 +25,14 @@ void	*monitor(void *param)
 int		process(t_philo *philo)
 {
 	philo->start_time = get_time();
-	if (pthread_create(&philo->monitor, NULL, monitor, philo))
-		return (str_err("Failed to create thread.\n"));
+	if (ft_pthread_init(philo->monitor, monitor, philo))
+		return (1);
 	while (!philo->info->stop)
 	{
 		eating(philo);
 		if (philo->info->num_must_eat != -1 && \
 		philo->meals == philo->info->num_must_eat)
-		{
 			sem_post(philo->info->full);
-			break ;
-		}
 		if (philo->info->stop)
 			break ;
 		sleeping(philo);
@@ -45,8 +42,6 @@ int		process(t_philo *philo)
 		if (philo->info->stop)
 			break ;
 	}
-	if (pthread_join(philo->monitor, NULL))
-		return (str_err("Failed to join thread.\n"));
 	return (0);
 }
 
@@ -65,19 +60,17 @@ void	*check_meals(void *param)
 			break ;
 	}
 	info->stop = 1;
+	info->all_full = 1;
 	return (NULL);
 }
 
 void	*check_died(void *param)
 {
-	int		i;
 	t_info	*info;
 
 	info = param;
 	sem_wait(info->died);
-	i = -1;
-	while (++i < info->num_philo)
-		kill(info->philo[i].philo_p, SIGTERM);
+	info->stop = 1;
 	return (NULL);
 }
 
@@ -85,19 +78,14 @@ int		dining_philo(t_info *info)
 {
 	int	i;
 
-	if (pthread_create(&info->full_t, NULL, check_meals, info))
-		return (str_err("Failed to create thread.\n"));
-	if (pthread_detach(info->full_t))
-		return (str_err("Failed to detach thread.\n"));
-	if (pthread_create(&info->died_t, NULL, check_died, info))
-		return (str_err("Failed to create thread.\n"));
-	if (pthread_detach(info->died_t))
-		return (str_err("Failed to detach thread.\n"));
+	if (ft_pthread_init(info->full_t, check_meals, info))
+		return (1);
+	if (ft_pthread_init(info->died_t, check_died, info))
+		return (1);
 	info->base_time = get_time();
 	i = -1;
 	while (++i < info->num_philo)
 	{
-		// info->philo[i].start_time = get_time();
 		info->philo[i].philo_p = fork();
 		if (info->philo[i].philo_p == 0)
 		{
@@ -107,11 +95,10 @@ int		dining_philo(t_info *info)
 		else if (info->philo[i].philo_p < 0)
 			return (str_err("Failed to fork process.\n"));
 	}
+	while (!info->stop)
+		usleep(10);
 	i = -1;
-	if (info->stop)
-	{
-		while (++i < info->num_philo)
-			kill(info->philo[i].philo_p, SIGTERM);
-	}
+	while (++i < info->num_philo)
+		kill(info->philo[i].philo_p, SIGTERM);
 	return (0);
 }
