@@ -26,11 +26,15 @@ int		get_time(void);
 int		ft_atoi_pos(char *arg);
 char	*ft_itoa(int n);
 
+int		ft_pthread_init(pthread_t pth, void *func, void *param);
+
 int		dining_philo(t_info *info);
 void	eating(t_philo *philo);
 void	sleeping(t_philo *philo);
 void	thinking(t_philo *philo);
 
 void	print_status(t_philo *philo, int status);
+
+void	free_all(t_info *info);
 
 #endif
