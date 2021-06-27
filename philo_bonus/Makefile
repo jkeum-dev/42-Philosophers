@@ -17,6 +17,7 @@ OBJS_DIR = ./objs
 INC_DIR = ./includes
 
 SRCS =	./srcs/main.c			\
+		./srcs/free.c			\
 		./srcs/ft_atoi_pos.c	\
 		./srcs/ft_itoa.c		\
 		./srcs/philo.c			\
