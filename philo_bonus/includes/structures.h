@@ -16,6 +16,7 @@ struct s_info
 	int			num_must_eat;
 	int			stop;
 	int			base_time;
+	int			all_full;
 	sem_t		*fork;
 	sem_t		*status;
 	sem_t		*full;
