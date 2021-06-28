@@ -96,7 +96,7 @@ int		dining_philo(t_info *info)
 			return (str_err("Failed to fork process.\n"));
 	}
 	while (!info->stop)
-		usleep(10);
+		usleep(100);
 	i = -1;
 	while (++i < info->num_philo)
 		kill(info->philo[i].philo_p, SIGTERM);
