@@ -7,7 +7,7 @@
 typedef struct s_info	t_info;
 typedef struct s_philo	t_philo;
 
-struct s_info
+struct	s_info
 {
 	int			num_philo;
 	int			time_die;
@@ -26,7 +26,7 @@ struct s_info
 	t_philo		*philo;
 };
 
-struct s_philo
+struct	s_philo
 {
 	int			n;
 	int			start_time;
