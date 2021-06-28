@@ -3,11 +3,11 @@
 void	print_status(t_philo *philo, int status)
 {
 	sem_wait(philo->info->status);
-	if (philo->info->stop)
-	{
-		sem_post(philo->info->status);
-		return ;
-	}
+	// if (philo->info->stop)
+	// {
+	// 	sem_post(philo->info->status);
+	// 	return ;
+	// }
 	printf("%d\t", get_time() - philo->info->base_time);
 	printf("Philo %d ", philo->n + 1);
 	if (status == FORK)
