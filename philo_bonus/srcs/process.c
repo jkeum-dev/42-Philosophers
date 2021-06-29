@@ -69,16 +69,11 @@ void	*check_meals(void *param)
 
 void	*check_died(void *param)
 {
-	// int		i;
 	t_info	*info;
 
 	info = param;
 	sem_wait(info->died);
 	info->stop = 1;
-	// i = -1;
-	// while (++i < info->num_philo)
-	// 	kill(info->philo[i].philo_p, SIGTERM);
-	// exit(0);
 	return (NULL);
 }
 
@@ -105,11 +100,8 @@ int		dining_philo(t_info *info)
 	}
 	while (!info->stop && !info->all_full)
 		usleep(100);
-	// if (info->all_full)
-	// {
-		i = -1;
-		while (++i < info->num_philo)
-			kill(info->philo[i].philo_p, SIGTERM);
-	// }
+	i = -1;
+	while (++i < info->num_philo)
+		kill(info->philo[i].philo_p, SIGTERM);
 	return (0);
 }
