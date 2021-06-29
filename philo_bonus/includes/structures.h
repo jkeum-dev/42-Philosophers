@@ -21,6 +21,7 @@ struct	s_info
 	sem_t		*status;
 	sem_t		*full;
 	sem_t		*died;
+	sem_t		*print_died;
 	pthread_t	full_t;
 	pthread_t	died_t;
 	t_philo		*philo;
