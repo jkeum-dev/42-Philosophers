@@ -21,7 +21,7 @@ void	*philo(void *param)
 	t_philo	*philo;
 
 	philo = param;
-	if (philo->n % 2 == 0)
+	if (philo->n % 2 == 0 && philo->info->num_philo != 1)
 		usleep(1000 * philo->info->time_eat);
 	while (!philo->info->stop)
 	{
