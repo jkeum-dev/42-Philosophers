@@ -18,10 +18,8 @@ sem_t	*ft_sem_unlink_open(char *name, int value)
 int		init_info(t_info *info, char **argv, int argc)
 {
 	info->num_philo = ft_atoi_pos(argv[1]);
-	if (info->num_philo <= 0)
-		return (str_err("The number of philosophers must be at least one.\n"));
-	else if (info->num_philo > 200)
-		return (str_err("Do not test with more than 200 philosophers.\n"));
+	if (info->num_philo <= 0 || info->num_philo >= 200)
+		return (str_err("Num of philos: greater than 0 and less than 200\n"));
 	info->time_die = ft_atoi_pos(argv[2]);
 	info->time_eat = ft_atoi_pos(argv[3]);
 	info->time_sleep = ft_atoi_pos(argv[4]);
@@ -84,6 +82,5 @@ int		main(int argc, char *argv[])
 		return (1);
 	}
 	free_all(&info);
-	// system("leaks philo_bonus");
 	return (0);
 }
