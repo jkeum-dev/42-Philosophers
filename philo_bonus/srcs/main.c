@@ -41,6 +41,7 @@ int		init_info(t_info *info, char **argv, int argc)
 	info->status = ft_sem_unlink_open("/status", 1);
 	info->full = ft_sem_unlink_open("/full", 0);
 	info->died = ft_sem_unlink_open("/died", 0);
+	info->print_died = ft_sem_unlink_open("/print_died", 1);
 	return (0);
 }
 
