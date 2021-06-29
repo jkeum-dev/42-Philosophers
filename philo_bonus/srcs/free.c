@@ -1,14 +1,7 @@
 #include "philo_bonus.h"
 
-void	free_all(t_info *info)
+void	ft_sem_close_unlink(t_info *info)
 {
-	int		i;
-	char	*name;
-
-	if (!info->all_full)
-		sem_post(info->full);
-	else
-		sem_post(info->died);
 	sem_close(info->fork);
 	sem_close(info->status);
 	sem_close(info->full);
@@ -19,6 +12,18 @@ void	free_all(t_info *info)
 	sem_unlink("/full");
 	sem_unlink("/died");
 	sem_unlink("/print_died");
+}
+
+void	free_all(t_info *info)
+{
+	int		i;
+	char	*name;
+
+	if (!info->all_full)
+		sem_post(info->full);
+	else
+		sem_post(info->died);
+	ft_sem_close_unlink(info);
 	i = -1;
 	while (++i < info->num_philo)
 	{
