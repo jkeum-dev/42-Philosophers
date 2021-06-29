@@ -7,16 +7,18 @@ void	free_all(t_info *info)
 
 	if (!info->all_full)
 		sem_post(info->full);
-	if (info->stop)
+	else
 		sem_post(info->died);
 	sem_close(info->fork);
 	sem_close(info->status);
 	sem_close(info->full);
 	sem_close(info->died);
+	sem_close(info->print_died);
 	sem_unlink("/fork");
 	sem_unlink("/status");
 	sem_unlink("/full");
 	sem_unlink("/died");
+	sem_unlink("/print_died");
 	i = -1;
 	while (++i < info->num_philo)
 	{
